@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    picture: {
+        type: String,
+        required: true
+    },
     transactionHistory: {
         type: Array,
         required: false

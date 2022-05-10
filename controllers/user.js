@@ -1,6 +1,7 @@
 const userSchema = require('../models/user');
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const cloudinary = require('cloudinary').v2
 
 
 const JWT_SECRET = 'jdfuqgwefouh@#$%jknskdjhu%$^jasbdjqd376@!%sdlfj';
@@ -8,6 +9,12 @@ const JWT_SECRET = 'jdfuqgwefouh@#$%jknskdjhu%$^jasbdjqd376@!%sdlfj';
 //REGISTERING NEW USERS
 
 const createUser = async (req, res) => {
+
+    cloudinary.config({
+        cloud_name: "wilsonchinedu",
+        api_key: "147132482297155",
+        api_secret: "TuC__zwwBXQ764YO3Y_vXr73p00"
+    })
 
     
     const { phoneNumber } = req.body;  //get user phone number
@@ -21,27 +28,34 @@ const createUser = async (req, res) => {
         //User with phone number existing
         return res.json({status: 'error', error: 'User already existing'})
     } else {
-        const password = await bcrypt.hash(req.body.password, 10) //hash password
-        const user = new userSchema({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            phoneNumber: req.body.phoneNumber,
-            gender: req.body.gender,
-            stateOfResidence: req.body.stateOfResidence,
-            address: req.body.address,
-            cardNumber: req.body.cardNumber,
-            transactionHistory: req.body.transactionHistory,
-            depositPending: req.body.depositPending,
-            withdrawPending: req.body.withdrawPending,
-            password: password,
-            confirmPassword: password
-        }) // Create a new user from inputted data
+        cloudinary.uploader.upload(req.file['path'], async (error, result) => {
+            if(result) {
+                const password = await bcrypt.hash(req.body.password, 10) //hash password
+                const user = new userSchema({
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    phoneNumber: req.body.phoneNumber,
+                    picture: result['secure_url'],
+                    gender: req.body.gender,
+                    stateOfResidence: req.body.stateOfResidence,
+                    address: req.body.address,
+                    cardNumber: req.body.cardNumber,
+                    transactionHistory: req.body.transactionHistory,
+                    depositPending: req.body.depositPending,
+                    withdrawPending: req.body.withdrawPending,
+                    password: password,
+                    confirmPassword: password
+                }) // Create a new user from inputted data
 
-        user.save().then(() => {
-            console.log('User Created')
-            res.status(200).json({message: 'User created', status: 'ok'}) // add new user to the database
-        }).catch((err) => {
-            res.status(500).json({message: err})
+                user.save().then(() => {
+                    console.log('User Created')
+                    res.status(200).json({message: 'User created', status: 'ok'}) // add new user to the database
+                }).catch((err) => {
+                    res.status(500).json({message: err})
+                })
+            } else {
+                res.status(500).json({message: error})
+            }
         })
     }
 }

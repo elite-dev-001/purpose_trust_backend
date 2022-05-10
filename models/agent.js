@@ -13,6 +13,10 @@ const AgentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    picture: {
+        type: String,
+        required: true
+    },
     gender: {
         type: String,
         required: true

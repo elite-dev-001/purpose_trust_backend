@@ -3,6 +3,7 @@ const agentSchema = require('../models/agent')
 // const superAdminSchema = require('../models/super_admin')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const cloudinary = require('cloudinary').v2;
 
 const JWT_SECRET = 'jdfuqgwefouh@#$%jknskdjhu%$^jasbdjqd376@!%sdlfj';
 
@@ -10,6 +11,12 @@ const JWT_SECRET = 'jdfuqgwefouh@#$%jknskdjhu%$^jasbdjqd376@!%sdlfj';
 //REGISTERING NEW AGENT
 
 const createAgent = async (req, res) => {
+
+    cloudinary.config({
+        cloud_name: "wilsonchinedu",
+        api_key: "147132482297155",
+        api_secret: "TuC__zwwBXQ764YO3Y_vXr73p00"
+    })
 
     
     const { phoneNumber } = req.body;  //get admin email
@@ -22,23 +29,30 @@ const createAgent = async (req, res) => {
         //User with email existing
         return res.json({status: 'error', error: 'Agent already existing'})
     } else {
-        const password = await bcrypt.hash(req.body.password, 10) //hash password
-        const agent = new agentSchema({
-            firstName: req.body.firstName,
-            lastName: req.body.lastName, 
-            phoneNumber: req.body.phoneNumber,
-            gender: req.body.gender,
-            guarantors: req.body.guarantors,
-            loginPin: req.body.loginPin,
-            password: password,
-            confirmPassword: password
-        }) // Create a new ADMIN from inputted data
+        cloudinary.uploader.upload(req.file['path'], async (error, results) => {
+            if(results) {
+                const password = await bcrypt.hash(req.body.password, 10) //hash password
+                const agent = new agentSchema({
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName, 
+                    phoneNumber: req.body.phoneNumber,
+                    picture: results['secure_url'],
+                    gender: req.body.gender,
+                    guarantors: req.body.guarantors,
+                    loginPin: "",
+                    password: password,
+                    confirmPassword: password
+                }) // Create a new ADMIN from inputted data
 
-        agent.save().then(() => {
-            console.log('Agent Created')
-            res.status(200).json({message: 'Agent created', status: 'ok'}) // add new user to the database
-        }).catch((err) => {
-            res.status(500).json({message: err})
+                agent.save().then(() => {
+                    console.log('Agent Created')
+                    res.status(200).json({message: 'Agent created', status: 'ok'}) // add new user to the database
+                }).catch((err) => {
+                    res.status(500).json({message: err})
+                })
+            } else {
+                res.status(500).json({message: error})
+            }
         })
     }
 }
