@@ -58,13 +58,13 @@ const createUser = async (req, res) => {
             }
         })
     }
-}
+} //
 
 // GET CURRENT USER
 const getOneUser = (req, res) => {
     jwt.verify(req.token, JWT_SECRET, function(err, data) {
         if(err) {
-            res.status(403)
+            res.status(403) 
         } else {
             userSchema.find({_id: req.params.id}, (err, result) => {
                 if(err) {
