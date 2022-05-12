@@ -43,7 +43,7 @@ const UserSchema = new mongoose.Schema({
     },
     cardNumber: {
         type: String,
-        required: false
+        required: true
     },
     password: {
         type: String,
