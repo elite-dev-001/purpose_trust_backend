@@ -45,6 +45,14 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    cardPayment: {
+        type: Boolean,
+        required: true
+    },
+    balance: {
+        type: String,
+        required: false
+    },
     password: {
         type: String,
         required: true
