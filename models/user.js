@@ -53,6 +53,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    agentId: {
+        type: String,
+        required: true
+    },
     password: {
         type: String,
         required: true
