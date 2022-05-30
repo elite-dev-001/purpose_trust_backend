@@ -61,7 +61,7 @@ mongoose.connect(
 }).catch((err) => {
     console.log(err)
 })
-
+//ok let's try again
 //vikmU5kcfHpjEx5B
 
 // mongodb+srv://purposetrust:vikmU5kcfHpjEx5B@cluster0.s91cn.mongodb.net/PurposeTrust?retryWrites=true&w=majority
