@@ -103,13 +103,19 @@ const getAllUsers = (req, res) => {
 //UPDATE TRANSACTION HISTORY
 
 const updateTransHistory = async (req, res) => {
+    const user = await userSchema.findById({_id: req.params.id});
+    console.log( user['transactionHistory']);
+    const history = Array.from(user['transactionHistory'])
+    history.push(req.body.transactionHistory)
+    console.log(history);
     const transHistory = await userSchema.findByIdAndUpdate(
         {_id: req.params.id}, {
             $set: {
-                transactionHistory: req.body.transactionHistory
+                transactionHistory: history
             }
         }, {new: true}
     )
+    
     if(transHistory) {
         res.status(200).json({message: "Successfully updated"})
     } else {

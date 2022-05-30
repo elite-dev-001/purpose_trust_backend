@@ -4,7 +4,9 @@ const createUserRoute = require('./routes/user')
 const agentRoute = require('./routes/agent')
 const adminRoute = require('./routes/admin')
 const loginRoute = require('./routes/login')
+const savingsRoute = require('./routes/savings')
 const resetPasswordRoute = require('./routes/password_reset')
+const cors = require('cors')
 
 
 
@@ -23,6 +25,7 @@ app.use(function (req, res, next) {
     next();
 })
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
@@ -40,6 +43,9 @@ app.use('/api/login', loginRoute)
 
 //API ROUTES FOR PASSWORD RESET
 app.use('/api/reset/', resetPasswordRoute)
+
+//API FOR SAVINGS
+app.use('/api/savings/', savingsRoute)
 
 //MONGOOSE CONNECT
 mongoose.connect(
