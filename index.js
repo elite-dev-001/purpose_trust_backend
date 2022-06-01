@@ -14,13 +14,14 @@ let port = process.env.PORT || 5000;
 
 const app = express();
 
-app.use(function (req, res, next) {
+this.app.use(function (req, res, next) {
     res.header("Access-Control-Alllow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    // if(req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Private-Network", true)
+    if(req.method === "OPTIONS") {
         res.header("Access-Control-Allow-Methods", 'PUT, POST, PATCH, DELETE, GET')
         return res.status(200).json({})
-    // }
+    }
 
     next();
 })
@@ -32,10 +33,7 @@ const corsOptions = {
     methods: ["GET", "POST", "PATCH"]
 }
 
-app.use(cors({
-    origin: '*',
-    allowedHeaders: 'X-Requested-With, Content-Type, auth-token',
-}))
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
