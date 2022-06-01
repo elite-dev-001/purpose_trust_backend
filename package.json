@@ -4,8 +4,13 @@
   "description": "A backend for Purpose Trust",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "dev": "react-scripts start",
+    "start": "serve -s build",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "heroku-postbuild": "npm run build"
+    },
   "author": "Wilson",
   "license": "ISC",
   "dependencies": {
@@ -15,6 +20,7 @@
     "express": "^4.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.0",
-    "multer": "^1.4.4"
+    "multer": "^1.4.4",
+    "serve": "^13.0.2"
   }
 }
