@@ -14,10 +14,10 @@ let port = process.env.PORT || 8000;
 
 const app = express();
 
-this.app.use(function (req, res, next) {
+app.use(function (req, res, next) {
     res.header("Access-Control-Alllow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    // res.header("Access-Control-Allow-Private-Network", true)
+    res.header("Access-Control-Allow-Private-Network", true)
     if(req.method === "OPTIONS") {
         res.header("Access-Control-Allow-Methods", 'PUT, POST, PATCH, DELETE, GET')
         return res.status(200).json({})
