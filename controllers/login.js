@@ -11,6 +11,11 @@ const JWT_SECRET = 'jdfuqgwefouh@#$%jknskdjhu%$^jasbdjqd376@!%sdlfj';
 // USER LOGIN
 
 const loginControl = async (req, res) => {
+    // res.setHeader("Access-Control-Allow-Origin", "*")
+    // res.setHeader("Access-Control-Allow-Credentials", "true");
+    // res.setHeader("Access-Control-Max-Age", "1800");
+    // res.setHeader("Access-Control-Allow-Headers", "content-type");
+    // res.setHeader( "Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS" );
 
     const {phoneNumber, password} = req.body;
 

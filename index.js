@@ -25,7 +25,17 @@ app.use(function (req, res, next) {
     next();
 })
 
-app.use(cors())
+const corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true,
+    optionSuccessStatus: 200,
+    methods: ["GET", "POST", "PATCH"]
+}
+
+app.use(cors({
+    origin: '*',
+    allowedHeaders: 'X-Requested-With, Content-Type, auth-token',
+}))
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
