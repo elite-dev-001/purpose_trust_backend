@@ -65,10 +65,7 @@ const createUser = async (req, res) => {
 
 // GET CURRENT USER
 const getOneUser = (req, res) => {
-    jwt.verify(req.token, JWT_SECRET, function(err, data) {
-        if(err) {
-            res.status(403) 
-        } else {
+    
             userSchema.find({_id: req.params.id}, (err, result) => {
                 if(err) {
                     console.log(err);
@@ -77,17 +74,12 @@ const getOneUser = (req, res) => {
                     res.status(200).json(result)
                 }
             })
-        }
-    })
-}
+        
+    }
 
 // GET ALL USERS
 
 const getAllUsers = (req, res) => {
-    jwt.verify(req.token, JWT_SECRET, function(err, data) {
-        if(err) {
-            res.status(403)
-        } else {
             userSchema.find({}, (err, results) => {
                 if(err) {
                     console.log(err);
@@ -96,8 +88,6 @@ const getAllUsers = (req, res) => {
                     res.status(200).json({results})
                 }
             })
-        }
-    })
 }
 
 //UPDATE TRANSACTION HISTORY
@@ -120,6 +110,32 @@ const updateTransHistory = async (req, res) => {
         res.status(200).json({message: "Successfully updated"})
     } else {
         res.status(500).json({message: "Could not update"})
+    }
+}
+
+//UPDATE BALANCE
+const updateBalance = async (req, res) => {
+    const user = await userSchema.findById({_id: req.params.id})
+    const balance = parseFloat(user['balance'])
+    const amount = parseFloat(req.body.amount)
+    let mainBalance;
+    if(req.body.operation === 'deposit') {
+        mainBalance = balance + amount
+    }
+    if(req.body.operation === 'withdraw') {
+        mainBalance = balance - amount
+    }
+    const balanceUpdate = await userSchema.findByIdAndUpdate(
+        {_id: req.params.id}, {
+            $set: {
+                balance: mainBalance
+            }
+        }, {new: true}
+    );
+    if(balanceUpdate) {
+        res.status(200).json({message: 'Successfully Updated'})
+    } else {
+        res.status(500).json({message: 'Could not Update'})
     }
 }
 
@@ -157,4 +173,4 @@ const updateWithdrawPendingStatus = async (req, res) => {
     }
 }
 
-module.exports = { createUser, getOneUser, getAllUsers, updateTransHistory, updateDepositPendingStatus, updateWithdrawPendingStatus}
+module.exports = { createUser, getOneUser, getAllUsers, updateTransHistory, updateDepositPendingStatus, updateWithdrawPendingStatus, updateBalance}

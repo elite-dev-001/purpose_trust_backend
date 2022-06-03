@@ -23,6 +23,14 @@ const AgentSchema = new mongoose.Schema({
     },
     guarantors: {
         type: Array,
+        required: false
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    stateOfResidence: {
+        type: String,
         required: true
     },
     customers: {

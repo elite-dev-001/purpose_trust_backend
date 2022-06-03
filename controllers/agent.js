@@ -29,6 +29,7 @@ const createAgent = async (req, res) => {
         //User with email existing
         return res.json({status: 'error', error: 'Agent already existing'})
     } else {
+        console.log(req.file['path'])
         cloudinary.uploader.upload(req.file['path'], async (error, results) => {
             if(results) {
                 const password = await bcrypt.hash(req.body.password, 10) //hash password
@@ -38,6 +39,8 @@ const createAgent = async (req, res) => {
                     phoneNumber: req.body.phoneNumber,
                     picture: results['secure_url'],
                     gender: req.body.gender,
+                    address: req.body.address,
+                    stateOfResidence: req.body.stateOfResidence,
                     guarantors: req.body.guarantors,
                     loginPin: "",
                     password: password,
@@ -60,10 +63,7 @@ const createAgent = async (req, res) => {
 // GET ALL AGENTS
 
 const getAllAgent = (req, res) => {
-    jwt.verify(req.token, JWT_SECRET, function(err, data) {
-        if(err) {
-            res.status(403)
-        } else {
+    
             agentSchema.find({}, (err, results) => {
                 if(err) {
                     console.log(err);
@@ -72,18 +72,13 @@ const getAllAgent = (req, res) => {
                     res.status(200).json({results})
                 }
             })
-        }
-    })
 }
 
 
 // GET CURRENT AGENT
 
 const getOneAgent = (req, res) => {
-    jwt.verify(req.token, JWT_SECRET, function(err, data) {
-        if(err) {
-            res.status(403)
-        } else {
+
             agentSchema.find({_id: req.params.id}, (err, result) => {
                 if(err) {
                     console.log(err);
@@ -92,8 +87,6 @@ const getOneAgent = (req, res) => {
                     res.status(200).json(result)
                 }
             })
-        }
-    })
 }
 
 //UPDATE AGENT CUSTOMERS

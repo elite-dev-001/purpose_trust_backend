@@ -4,10 +4,11 @@ const createSavings = (req, res) => {
 
     const saving = new savingSchema({
         status: req.body.status,
-        time: new Date().toTimeString(),
+        time: new Date().toTimeString().slice(0, 9),
         day: new Date().toDateString(),
         amount: req.body.amount,
-        userId: req.body.userId
+        userId: req.body.userId,
+        operation: req.body.operation
     })
 
     saving.save().then(() => {
@@ -46,4 +47,15 @@ const getAllSavings = (req, res) => {
     })
 }
 
-module.exports = { createSavings, statusUpdate, getAllSavings}
+const getOneSavings = (req, res) => {
+    savingSchema.find({_id: req.params.id}, (err, result) => {
+        if(err) {
+            console.log(err);
+            res.status(500).json({message: err})
+        } else {
+            res.status(200).json(result)
+        }
+    })
+}
+
+module.exports = { createSavings, statusUpdate, getAllSavings, getOneSavings}
