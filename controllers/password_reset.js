@@ -10,11 +10,9 @@ const JWT_SECRET = 'jdfuqgwefouh@#$%jknskdjhu%$^jasbdjqd376@!%sdlfj';
 
 const resetPassword = async (req, res) => {
 
-    const admin = await adminSchema.findOne({ phoneNumber }).lean();
-    const agent = await agentSchema.findOne({ phoneNumber }).lean();
+    const { newPassword, token, user } = req.body;
 
-    if(agent) {
-        const { newPassword, token } = req.body;
+    if(user === 'agent') {
     try {
         const agent =  jwt.verify(token, JWT_SECRET)
         const _id = agent.id
@@ -30,7 +28,7 @@ const resetPassword = async (req, res) => {
     } catch (error) {
         res.json({ status: 'error', error: ';))'})
     }
-    } else if(admin) {
+    } else if( user === 'admin') {
         const { newPassword, token } = req.body;
     try {
         const agent =  jwt.verify(token, JWT_SECRET)
