@@ -29,9 +29,8 @@ const resetPassword = async (req, res) => {
         res.json({ status: 'error', error: ';))'})
     }
     } else if( user === 'admin') {
-        const { newPassword, token } = req.body;
     try {
-        const agent =  jwt.verify(token, JWT_SECRET)
+        const admin =  jwt.verify(token, JWT_SECRET)
         const _id = admin.id
         const hashedPassword = await bcrypt.hash(newPassword, 10)
         await adminSchema.updateOne({ _id}, {
