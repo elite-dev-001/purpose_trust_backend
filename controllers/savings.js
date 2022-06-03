@@ -8,7 +8,8 @@ const createSavings = (req, res) => {
         day: new Date().toDateString(),
         amount: req.body.amount,
         userId: req.body.userId,
-        operation: req.body.operation
+        operation: req.body.operation,
+        agentName: req.body.agentName
     })
 
     saving.save().then(() => {

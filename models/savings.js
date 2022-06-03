@@ -9,6 +9,10 @@ const SavingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    agentName: {
+        type: String,
+        required: true
+    },
     day: {
         type: String,
         required: false
