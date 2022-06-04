@@ -22,8 +22,8 @@ const createAgent = async (req, res) => {
     const { phoneNumber } = req.body;  //get admin email
 
     const agentNumber = await agentSchema.findOne({ phoneNumber }).lean(); // check if email is already existing in Admin category
-    // const userEmail = await userSchema.findOne({ email }).lean();
-    // const superAdminEmail = await superAdminSchema.findOne({ email }).lean();
+    
+    
 
     if(agentNumber) {
         //User with email existing
@@ -32,7 +32,7 @@ const createAgent = async (req, res) => {
         console.log(req.file['path'])
         cloudinary.uploader.upload(req.file['path'], async (error, results) => {
             if(results) {
-                const password = await bcrypt.hash(req.body.password, 10) //hash password
+                const password = await bcrypt.hash(req.body.password, 10)  //hash password
                 const agent = new agentSchema({
                     firstName: req.body.firstName,
                     lastName: req.body.lastName, 
