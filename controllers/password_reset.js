@@ -32,9 +32,9 @@ const resetPassword = async (req, res) => {
     try {
         const admin =  jwt.verify(token, JWT_SECRET)
         const _id = admin.id
-        const hashedPassword = await bcrypt.hash(newPassword, 10)
+        const password = await bcrypt.hash(newPassword, 10)
         await adminSchema.updateOne({ _id}, {
-            $set: { password: hashedPassword}
+            $set: { password}
         }).then(() => {
             res.json({ status: 'ok', message: "Success"})
         }).catch((err) => {
