@@ -43,6 +43,7 @@ const createUser = async (req, res) => {
                     cardPayment: req.body.cardPayment,
                     balance: '0.0',
                     agentId: req.body.agentId,
+                    principalAmount: req.body.principalAmount,
                     transactionHistory: req.body.transactionHistory,
                     depositPending: req.body.depositPending,
                     withdrawPending: req.body.withdrawPending,
@@ -172,5 +173,37 @@ const updateWithdrawPendingStatus = async (req, res) => {
         res.status(500).json({message: "Could not update"})
     }
 }
+// UPDATE WITHDRAW PENDING STATUS
 
-module.exports = { createUser, getOneUser, getAllUsers, updateTransHistory, updateDepositPendingStatus, updateWithdrawPendingStatus, updateBalance}
+const updateCardPayment = async (req, res) => {
+    const cardStatus = await userSchema.findByIdAndUpdate(
+        {_id: req.params.id}, {
+            $set: {
+                cardPayment: req.body.cardPayment
+            }
+        }, {new: true}
+    )
+    if(cardStatus) {
+        res.status(200).json({message: "Successfully updated"})
+    } else {
+        res.status(500).json({message: "Could not update"})
+    }
+}
+// UPDATE WITHDRAW PENDING STATUS
+
+const updatePrincipalAmount = async (req, res) => {
+    const principalAmountStatus = await userSchema.findByIdAndUpdate(
+        {_id: req.params.id}, {
+            $set: {
+                principalAmount: req.body.principalAmount
+            }
+        }, {new: true}
+    )
+    if(principalAmountStatus) {
+        res.status(200).json({message: "Successfully updated"})
+    } else {
+        res.status(500).json({message: "Could not update"})
+    }
+}
+
+module.exports = { createUser, getOneUser, getAllUsers, updateTransHistory, updateDepositPendingStatus, updateWithdrawPendingStatus, updateBalance, updateCardPayment, updatePrincipalAmount}

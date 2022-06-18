@@ -12,7 +12,7 @@ const fileUpload = require('express-fileupload')
 
 let port = process.env.PORT || 5000;
 
-const app = express();
+const app = express(); 
 
 app.use(function (req, res, next) {
     res.header("Access-Control-Alllow-Origin", "*");
@@ -39,7 +39,7 @@ const corsOptions = {
 
 app.use(cors())
 app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({extended: false}))
 
 //API ROUTES FOR USERS
 app.use('/api/user/', createUserRoute);

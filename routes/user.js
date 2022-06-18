@@ -14,5 +14,7 @@ router.patch('/update/transactions/:id', userController.updateTransHistory);
 router.patch('/update/deposit/pending/:id', userController.updateDepositPendingStatus)
 router.patch('/update/withdraw/pending/:id', userController.updateWithdrawPendingStatus)
 router.patch('/update/balance/:id', userController.updateBalance)
+router.patch('/update/card/payment/:id', userController.updateCardPayment)
+router.patch('/update/principal/amount/:id', userController.updatePrincipalAmount)
 
 module.exports = router;
