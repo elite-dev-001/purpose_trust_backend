@@ -195,6 +195,7 @@ const updatePrincipalAmount = async (req, res) => {
     const principalAmountStatus = await userSchema.findByIdAndUpdate(
         {_id: req.params.id}, {
             $set: {
+                phoneNumber: req.body.phoneNumber,
                 principalAmount: req.body.principalAmount
             }
         }, {new: true}
