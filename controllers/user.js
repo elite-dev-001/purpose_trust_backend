@@ -215,5 +215,20 @@ const updatePrincipalAmount = async (req, res) => {
     }
 }
 
+const pendingLoan = async (req, res) => {
+    const updateLoan = await userSchema.findByIdAndUpdate(
+        {_id: req.params.id}, {
+            $set: {
+                pendingLoan: req.body.pendingLoan
+            }
+        }, {new: true}
+    )
+    if(updateLoan) {
+        res.status(200).json({message: 'Successfully Updated'})
+    } else {
+        res.status(500).json({message: 'Could not Update'})
+    }
+}
 
-module.exports = { createUser, getOneUser, getAllUsers, updateTransHistory, updateDepositPendingStatus, updateWithdrawPendingStatus, updateBalance, updateCardPayment, updatePrincipalAmount}
+
+module.exports = { createUser, getOneUser, getAllUsers, updateTransHistory, updateDepositPendingStatus, updateWithdrawPendingStatus, updateBalance, updateCardPayment, updatePrincipalAmount, pendingLoan}
