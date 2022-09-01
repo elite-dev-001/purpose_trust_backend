@@ -13,9 +13,9 @@ const JWT_SECRET = 'jdfuqgwefouh@#$%jknskdjhu%$^jasbdjqd376@!%sdlfj';
 const createAgent = async (req, res) => {
 
     cloudinary.config({
-        cloud_name: "wilsonchinedu",
-        api_key: "147132482297155",
-        api_secret: "TuC__zwwBXQ764YO3Y_vXr73p00"
+        cloud_name: "purpose-trust",
+        api_key: "122684541261347",
+        api_secret: "4_kry7z7U9C4BVTMw19huPsVFkg"
     })
 
     

@@ -5,6 +5,7 @@ const agentRoute = require('./routes/agent')
 const adminRoute = require('./routes/admin')
 const loginRoute = require('./routes/login')
 const savingsRoute = require('./routes/savings')
+const commissionRoute = require('./routes/commission')
 const resetPasswordRoute = require('./routes/password_reset')
 const cors = require('cors')
 const fileUpload = require('express-fileupload')
@@ -58,6 +59,9 @@ app.use('/api/reset/', resetPasswordRoute)
 
 //API FOR SAVINGS
 app.use('/api/savings/', savingsRoute)
+
+//API FOR COMMISSION
+app.use('/api/commission/', commissionRoute)
 
 //MONGOOSE CONNECT
 mongoose.connect(
