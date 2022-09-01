@@ -61,6 +61,26 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    akawoEligible: {
+        type: Boolean,
+        required: false
+    },
+    businessEligible: {
+        type: Boolean,
+        required: false
+    },
+    onLoan: {
+        type: Boolean,
+        required: false
+    },
+    pendingLoan: {
+        type: Boolean,
+        required: false
+    },
+    loanDetails: {
+        type: Array,
+        required: false
+    },
     password: {
         type: String,
         required: true

@@ -47,6 +47,11 @@ const createUser = async (req, res) => {
                     transactionHistory: req.body.transactionHistory,
                     depositPending: req.body.depositPending,
                     withdrawPending: req.body.withdrawPending,
+                    akawoEligible: false,
+                    businessEligible: false,
+                    onLoan: false,
+                    pendingLoan: false,
+                    loanDetails: [],
                     password: password,
                     confirmPassword: password
                 }) // Create a new user from inputted data
@@ -209,5 +214,6 @@ const updatePrincipalAmount = async (req, res) => {
         res.status(500).json({message: "Could not update"})
     }
 }
+
 
 module.exports = { createUser, getOneUser, getAllUsers, updateTransHistory, updateDepositPendingStatus, updateWithdrawPendingStatus, updateBalance, updateCardPayment, updatePrincipalAmount}
