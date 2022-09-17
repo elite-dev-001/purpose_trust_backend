@@ -325,4 +325,4 @@ const declineLoan = async (req, res) => {
 }
 
 
-module.exports = { createUser, getOneUser, getAllUsers, updateTransHistory, updateDepositPendingStatus, updateWithdrawPendingStatus, updateBalance, updateCardPayment, updatePrincipalAmount, pendingLoan, akawoLoanUpdate, businessLoanUpdate, approveLoan}
+module.exports = { createUser, getOneUser, getAllUsers, updateTransHistory, updateDepositPendingStatus, updateWithdrawPendingStatus, updateBalance, updateCardPayment, updatePrincipalAmount, pendingLoan, akawoLoanUpdate, businessLoanUpdate, approveLoan, declineLoan}
