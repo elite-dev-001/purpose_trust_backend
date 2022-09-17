@@ -215,6 +215,8 @@ const updatePrincipalAmount = async (req, res) => {
     }
 }
 
+
+//UPDATE PENDING LOAN
 const pendingLoan = async (req, res) => {
     const loanData = [{
         "loanType": req.body.loanType,
@@ -236,5 +238,39 @@ const pendingLoan = async (req, res) => {
     }
 }
 
+//UPDATE AKAWO LOAN
+const akawoLoanUpdate = async (req, res) => {
+    const {loanStatus} = req.body
+    const updateLoan = await userSchema.findByIdAndUpdate(
+        {_id: req.params.id}, {
+            $set: {
+                akawoEligible: loanStatus
+            }
+        }, {new: true}
+    )
+    if(updateLoan){
+        res.status(200).json({message: 'Successfully Updated'})
+    } else {
+        res.status(500).json({message: 'Could not Update'})
+    }
+}
 
-module.exports = { createUser, getOneUser, getAllUsers, updateTransHistory, updateDepositPendingStatus, updateWithdrawPendingStatus, updateBalance, updateCardPayment, updatePrincipalAmount, pendingLoan}
+//UPDATE BUSINESS LOAN
+const businessLoanUpdate = async (req, res) => {
+    const {loanStatus} = req.body
+    const updateLoan = await userSchema.findByIdAndUpdate(
+        {_id: req.params.id}, {
+            $set: {
+                businessEligible: loanStatus
+            }
+        }, {new: true}
+    )
+    if(updateLoan){
+        res.status(200).json({message: 'Successfully Updated'})
+    } else {
+        res.status(500).json({message: 'Could not Update'})
+    }
+}
+
+
+module.exports = { createUser, getOneUser, getAllUsers, updateTransHistory, updateDepositPendingStatus, updateWithdrawPendingStatus, updateBalance, updateCardPayment, updatePrincipalAmount, pendingLoan, akawoLoanUpdate, businessLoanUpdate}
