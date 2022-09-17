@@ -218,12 +218,12 @@ const updatePrincipalAmount = async (req, res) => {
 
 //UPDATE PENDING LOAN
 const pendingLoan = async (req, res) => {
-    const loanData = [{
+    const loanData = {
         "loanType": req.body.loanType,
         "loanAmount": req.body.loanAmount,
         "loanDate": new Date().toDateString(),
         "loanStatus": 'Pending'
-    }];
+    };
     const user = await userSchema.findById({_id: req.params.id})
     const loanDetails = Array.from(user['loanDetails'])
     loanDetails.push(loanData)
