@@ -272,5 +272,57 @@ const businessLoanUpdate = async (req, res) => {
     }
 }
 
+//APPROVE LOAN REQUEST
+const approveLoan = async (req, res) => {
+    const {loanAmount} = req.body
+    const user = await userSchema.findById({_id: req.params.id})
+    const loanDetails = Array.from(user['loanDetails'])
+    const currentLoan = loanDetails[loanDetails.length - 1];
+    currentLoan.loanStatus = 'Approved'
+    loanDetails.splice(-1, 1, currentLoan)
 
-module.exports = { createUser, getOneUser, getAllUsers, updateTransHistory, updateDepositPendingStatus, updateWithdrawPendingStatus, updateBalance, updateCardPayment, updatePrincipalAmount, pendingLoan, akawoLoanUpdate, businessLoanUpdate}
+    const newBalance = parseFloat(user['balance']) - parseFloat(loanAmount)
+
+    const loanApproved = await userSchema.findByIdAndUpdate(
+        {_id: req.params.id}, {
+            $set: {
+                onLoan: true,
+                pendingLoan: false,
+                balance: newBalance,
+                loanDetails: loanDetails
+            }
+        }, {new: true}
+    )
+    if(loanApproved){
+        res.status(200).json({message: 'Successfully Updated'})
+    } else {
+        res.status(500).json({message: 'Could not Update'})
+    }
+}
+
+//DELINE LOAN REQUEST
+const declineLoan = async (req, res) => {
+    const {pendingLoan} = req.body
+    const user = await userSchema.findById({_id: req.params.id})
+    const loanDetails = Array.from(user['loanDetails'])
+    const currentLoan = loanDetails[loanDetails.length - 1];
+    currentLoan.loanStatus = 'Declined'
+    loanDetails.splice(-1, 1, currentLoan)
+
+    const loanDeclined = await userSchema.findByIdAndUpdate(
+        {_id: req.params.id}, {
+            $set: {
+                pendingLoan: pendingLoan,
+                loanDetails: loanDetails
+            }
+        }, {new: true}
+    )
+    if(loanDeclined){
+        res.status(200).json({message: 'Successfully Updated'})
+    } else {
+        res.status(500).json({message: 'Could not Update'})
+    }
+}
+
+
+module.exports = { createUser, getOneUser, getAllUsers, updateTransHistory, updateDepositPendingStatus, updateWithdrawPendingStatus, updateBalance, updateCardPayment, updatePrincipalAmount, pendingLoan, akawoLoanUpdate, businessLoanUpdate, approveLoan}

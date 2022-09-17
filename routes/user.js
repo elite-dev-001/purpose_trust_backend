@@ -19,5 +19,7 @@ router.patch('/update/principal/amount/:id', userController.updatePrincipalAmoun
 router.patch('/update/pending/loan/:id', userController.pendingLoan)
 router.patch('/update/akawo/loan/:id', userController.akawoLoanUpdate)
 router.patch('/update/business/loan/:id', userController.businessLoanUpdate)
+router.patch('/approve/loan/:id', userController.approveLoan)
+router.patch('/decline/loan/:id', userController.declineLoan)
 
 module.exports = router;
