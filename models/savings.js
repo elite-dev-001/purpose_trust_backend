@@ -29,6 +29,10 @@ const SavingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    commission: {
+        type: Boolean,
+        required: true
+    }
 })
 
 module.exports = mongoose.model('savings', SavingSchema)

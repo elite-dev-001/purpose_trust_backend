@@ -9,7 +9,8 @@ const createSavings = (req, res) => {
         amount: req.body.amount,
         userId: req.body.userId,
         operation: req.body.operation,
-        agentName: req.body.agentName
+        agentName: req.body.agentName,
+        commission: req.body.commission
     })
 
     saving.save().then(() => {
