@@ -22,9 +22,9 @@ const getAllCommissions = (req, res) => {
     commissionSchema.find({}, (err, results) => {
         if(err) {
             console.log(err)
-            res.status(200).json({message: err})
+            res.status(500).json({message: err})
         } else {
-            res.status(500).json({results})
+            res.status(200).json({results})
         }
     })
 }
