@@ -67,7 +67,7 @@ const createUser = async (req, res) => {
             }
         })
     }
-} //
+} //Update
 
 // GET CURRENT USER
 const getOneUser = (req, res) => {
