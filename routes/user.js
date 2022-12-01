@@ -2,7 +2,7 @@ const express = require('express')
 const userController = require('../controllers/user')
 const ensureToken = require('../token')
 const multer = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const upload = multer({ dest: '/tmp' })
 
 
 const router = express.Router();
