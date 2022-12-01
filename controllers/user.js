@@ -181,10 +181,12 @@ const updateWithdrawPendingStatus = async (req, res) => {
 // UPDATE WITHDRAW PENDING STATUS
 
 const updateCardPayment = async (req, res) => {
+    const user = await userSchema.findById({_id: req.params.id}).lean()
     const cardStatus = await userSchema.findByIdAndUpdate(
         {_id: req.params.id}, {
             $set: {
-                cardPayment: req.body.cardPayment
+                cardPayment: req.body.cardPayment,
+                balance: parseFloat(user['balance']) - 200
             }
         }, {new: true}
     )
